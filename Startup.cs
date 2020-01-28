@@ -37,8 +37,6 @@ namespace demo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            string envVar = Environment.GetEnvironmentVariable("DEV_STATUS");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,13 +72,10 @@ namespace demo
                 // Add MapRazorPages if the app uses Razor Pages. Since Endpoint Routing includes support for many frameworks, adding Razor Pages is now opt -in.
                 endpoints.MapRazorPages();
             });
-            if (envVar=="fullend")
+            app.UseSpa(spa =>
             {
-                app.UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "ClientApp";
-                });
-            }
+                spa.Options.SourcePath = "ClientApp";
+            });
         }
     }
 }
